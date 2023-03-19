@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { BiSearchAlt } from 'react-icons/bi';
 import {
     SearchbarContainer, SearchForm, SearchFormButton,
@@ -6,37 +6,36 @@ import {
 } from './Searchbar.styled';
 import Notiflix from 'notiflix';
 
-export class Searchbar extends Component {
-  state = {
-    value: '',
+export const Searchbar = ({ onSearch }) => {
+  const [value, setValue] = useState('');
+
+  const handleChange = event => {
+    // const newSearch = event.target.value;
+    setValue(event.target.value);
   };
 
-  handleChange = ({ target: { value } }) => {
-    this.setState({ value });
-  };
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    if (!this.state.value)
-      return  Notiflix.Notify.failure(
-        'Please, enter search data...')
-        
-    this.props.onSearch(this.state.value);
-    this.setState({ value: '' });
+    if (!value) {
+      Notiflix.Notify.failure(
+        'Please, enter search data...');
+    } else {
+      onSearch(value);
+    }
+    setValue('');
   };
 
-  render() {
     return (
       <SearchbarContainer>
-        <SearchForm onSubmit={this.handleSubmit} status={'pending'}>
+        <SearchForm onSubmit={handleSubmit} status={'pending'}>
           <SearchFormInput
             autocomplete="off"
             autoFocus
             type="text"
             placeholder="Search images and photos"
             aria-label="Search"
-            value={this.state.value}
-            onChange={this.handleChange}
+            value={value}
+            onChange={handleChange}
           />
                 <SearchFormButton type="submit">
                  <BiSearchAlt
@@ -51,7 +50,7 @@ export class Searchbar extends Component {
       </SearchbarContainer>
     );
   }
-}
+
 
 Notiflix.Notify.init({
   width: '400px',
