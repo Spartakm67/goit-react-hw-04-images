@@ -32,7 +32,8 @@ export const App = () => {
   };
 
 useEffect(() => {
-    function getGallery() {
+  function getGallery() {
+      
       if ((searchValue && flag) || page !== 1) {
         getPhoto(searchValue, page)
           .then(data => {
@@ -40,9 +41,14 @@ useEffect(() => {
             setStatus('resolved');
             setShowBtn(page < Math.ceil(data.totalHits / 12));
             setFlag(false);
-            if (page === 1) {
+            if (page === 1 && data.totalHits !== 0) {
               Notiflix.Notify.success(
                 `We have just found ${data.totalHits} photos for you...`
+              );
+            }
+            if (data.totalHits === 0) {
+              Notiflix.Notify.warning(
+                `Sorry, we have not found any photos for you...please, try again!`
               );
             }
           })
