@@ -17,21 +17,7 @@ export const App = () => {
   const [showBtn, setShowBtn] = useState(false);
   const [flag, setFlag] = useState(0);
 
- function handleSubmit(value) {
-    setsearchValue(value);
-    setGallery([]);
-    setPage(1);
-    setStatus('pending');
-    setShowBtn(false);
-    setFlag(true);
-  };
-
-  function handleLoad() {
-    scroll.scrollMore(window.innerHeight - 125);
-    setPage(page + 1);
-  };
-
-useEffect(() => {
+ useEffect(() => {
   function getGallery() {
       
       if ((searchValue && flag) || page !== 1) {
@@ -62,7 +48,20 @@ useEffect(() => {
     getGallery();
   }, [searchValue, page, flag]);
 
+function handleSubmit(value) {
+    setsearchValue(value);
+    setGallery([]);
+    setPage(1);
+    setStatus('pending');
+    setShowBtn(false);
+    setFlag(true);
+  };
 
+  function handleLoad() {
+    scroll.scrollMore(window.innerHeight - 125);
+    setPage(page + 1);
+  };
+  
    return (
     <Container>
       <Searchbar onSearch={handleSubmit} />
