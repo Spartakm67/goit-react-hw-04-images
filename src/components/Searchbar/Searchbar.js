@@ -10,8 +10,8 @@ export const Searchbar = ({ onSearch }) => {
   const [value, setValue] = useState('');
 
   const handleChange = event => {
-    // const newSearch = event.target.value;
-    setValue(event.target.value);
+    const newValue = event.target.value;
+    setValue(newValue);
   };
 
   const handleSubmit = e => {

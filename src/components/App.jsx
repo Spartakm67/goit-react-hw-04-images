@@ -8,14 +8,7 @@ import { ButtonLoadMore } from './Button/Button';
 import Notiflix from 'notiflix';
 
 export const App = () => {
-  // state = {
-  //   searchValue: '',
-  //   gallery: [],
-  //   error: '',
-  //   status: 'stoped',
-  //   page: 1,
-  //   showBtn: false,
-  // };
+ 
   const [searchValue, setsearchValue] = useState('');
   const [gallery, setGallery] = useState([]);
   const [error, setError] = useState('');
@@ -24,41 +17,7 @@ export const App = () => {
   const [showBtn, setShowBtn] = useState(false);
   const [flag, setFlag] = useState(0);
 
-// componentDidUpdate(_, prevState) {
-//     const { searchValue, page } = this.state;
-
-//     if (
-//       prevState.searchValue !== searchValue ||
-//       prevState.page !== page
-//     ) {
-//       this.setState({ status: 'pending' });
-
-//       getPhoto(searchValue, page)
-//         .then(response => response.json())
-//         .then(photo => {
-//           this.setState(prevState => ({
-//             gallery: [...prevState.gallery, ...photo.hits],
-//             status: 'resolved',
-//             isLoading: true,
-//             showBtn: page < Math.ceil(photo.totalHits / 12),
-            
-//           }))
-//             ;
-//           if (page === 1) {
-//             Notiflix.Notify.success(
-//               `We have just found ${photo.totalHits} photos for you...`
-//             );
-//           }
-//         })
-//         .catch(error => {
-//           this.setState({ error, status: 'rejected' });
-//         });
-//     }
-//   }
-
-  
-
-  function handleSubmit(value) {
+ function handleSubmit(value) {
     setsearchValue(value);
     setGallery([]);
     setPage(1);
@@ -73,7 +32,7 @@ export const App = () => {
   };
 
 useEffect(() => {
-    function getPhotos() {
+    function getGallery() {
       if ((searchValue && flag) || page !== 1) {
         getPhoto(searchValue, page)
           .then(data => {
@@ -94,12 +53,11 @@ useEffect(() => {
       }
     }
 
-    getPhotos();
+    getGallery();
   }, [searchValue, page, flag]);
 
 
-  // const { gallery, status, error, showBtn } = this.state;
-    return (
+   return (
     <Container>
       <Searchbar onSearch={handleSubmit} />
       <ImageGallery gallery={gallery} status={status} error={error} />
